@@ -1,4 +1,4 @@
-package parser
+package scraper
 
 import (
 	"io"
@@ -43,7 +43,7 @@ func Parse(r io.Reader) AmazonCoUkParsedData {
 func getAvailable(doc *goquery.Document) (available bool) {
 	avail := doc.Find("div#availability")
 	if avail.Length() > 0 {
-		available = strings.Contains(avail.Text(), "n stock")
+		available = strings.Contains(avail.Text(), "n stock") // In stock./Only # left in stock.
 	}
 
 	return
