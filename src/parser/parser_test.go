@@ -2,6 +2,7 @@ package parser_test
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/daregod/amazon-co-uk-scraper/src/parser"
@@ -13,24 +14,28 @@ var _ = Describe("Test Parser", func() {
 	It("Compiles", func() {
 		Expect(true).To(BeTrue())
 	})
-	It("Parse", func() {
-		div, err := os.Open("./test_data/div_new_in_stock.txt")
-		Expect(err).To(Succeed())
-		result := parser.Parse(div)
-		Expect(result.Price).To(Equal(`8.49`))
-		Expect(result.Available).To(BeTrue())
-
-		div, err = os.Open("./test_data/div_new_and_used.txt")
-		Expect(err).To(Succeed())
-		result = parser.Parse(div)
-		Expect(result.Price).To(Equal(`41.99`))
-		Expect(result.Available).To(BeTrue())
-
-		div, err = os.Open("./test_data/div_used_only.txt")
-		Expect(err).To(Succeed())
-		result = parser.Parse(div)
-		Expect(result.Price).To(Equal(`442.62`))
-		Expect(result.Available).To(BeFalse())
+	Describe("Parse", func() {
+		cases := []struct {
+			filename string
+			result   parser.AmazonCoUkParsedData
+		}{
+			{"1509836071.new_in_stock.html",
+				parser.AmazonCoUkParsedData{Title: "The Fat-Loss Plan: 100 Quick and Easy Recipes with Workouts", Price: "8.49", Image: "https://images-eu.ssl-images-amazon.com/images/I/61modEZimPL._SX218_BO1,204,203,200_QL40_.jpg", Available: true}},
+			{"1787125645.new_and_used.html",
+				parser.AmazonCoUkParsedData{Title: "Go Systems Programming: Master Linux and Unix system level programming with Go", Price: "41.99", Image: "https://images-eu.ssl-images-amazon.com/images/I/41y7-qWywtL._SX218_BO1,204,203,200_QL40_.jpg", Available: true}},
+			{"059652692X.used_only.html",
+				parser.AmazonCoUkParsedData{Title: "Asterisk Cookbook", Price: "442.62", Image: "https://images-eu.ssl-images-amazon.com/images/I/51fXTdqAkaL._SX218_BO1,204,203,200_QL40_.jpg", Available: false}},
+		}
+		for _, c := range cases {
+			fn, res := c.filename, c.result
+			It("parsing "+fn, func() {
+				fullName := filepath.Join(".", "test_data", fn)
+				file, err := os.Open(fullName)
+				Expect(err).To(Succeed())
+				result := parser.Parse(file)
+				Expect(result).To(Equal(res))
+			})
+		}
 	})
 })
 
