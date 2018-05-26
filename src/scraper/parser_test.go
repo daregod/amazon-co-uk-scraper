@@ -3,7 +3,6 @@ package scraper_test
 import (
 	"os"
 	"path/filepath"
-	"testing"
 
 	"github.com/daregod/amazon-co-uk-scraper/src/scraper"
 	. "github.com/onsi/ginkgo"
@@ -40,8 +39,3 @@ var _ = Describe("Test Parser", func() {
 		}
 	})
 })
-
-func TestScraper(t *testing.T) {
-	RegisterFailHandler(Fail)
-	RunSpecs(t, "scraper")
-}
