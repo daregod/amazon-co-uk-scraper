@@ -24,7 +24,8 @@ func Parse(r io.Reader) AmazonCoUkParsedData {
 	if err != nil {
 		log.Fatal(err)
 	}
-	avail, price := getAvailableAndPrice(doc)
+	avail := getAvailable(doc)
+	price := getPrice(doc)
 	img := getImage(doc)
 	title := getTitle(doc)
 	result := AmazonCoUkParsedData{
@@ -39,40 +40,65 @@ func Parse(r io.Reader) AmazonCoUkParsedData {
 	return result
 }
 
-func getAvailableAndPrice(doc *goquery.Document) (available bool, price string) {
-	buyBox := doc.Find("div#buybox")
-
-	avail := buyBox.Find("div#availability")
+func getAvailable(doc *goquery.Document) (available bool) {
+	avail := doc.Find("div#availability")
 	if avail.Length() > 0 {
-		available = strings.Contains(avail.Text(), "In stock")
+		available = strings.Contains(avail.Text(), "n stock")
 	}
 
-	pr := buyBox.Find("span.a-color-price")
-	if pr.Length() > 0 {
-		price = strings.TrimFunc(pr.Text(), func(c rune) bool {
-			if strings.ContainsAny("0123456789.", string(c)) {
-				return false
-			}
-			return true
-		})
+	return
+}
+
+func getPrice(doc *goquery.Document) (price string) {
+	filterOut := func(bl *goquery.Selection) string {
+		pr := bl.Find("span.a-color-price")
+		if pr.Length() > 0 {
+			return strings.TrimFunc(pr.Text(), func(c rune) bool {
+				if strings.ContainsAny("0123456789.", string(c)) {
+					return false
+				}
+				return true
+			})
+		}
+		return ""
+	}
+
+	if price = filterOut(doc.Find("div#buybox")); price != "" {
+		return
+	}
+	if price = filterOut(doc.Find("div#price")); price != "" {
+		return
 	}
 	return
 }
 
 func getImage(doc *goquery.Document) (image string) {
-	img := doc.Find("img#imgBlkFront")
-	if img.Length() > 0 {
-		if imgSrc, ok := img.Attr("src"); ok {
-			image = imgSrc
+	filterOut := func(bl *goquery.Selection) string {
+		if bl.Length() > 0 {
+			if imgSrc, ok := bl.Attr("src"); ok {
+				return imgSrc
+			}
 		}
+		return ""
+	}
+	if image = filterOut(doc.Find("img#imgBlkFront")); image != "" {
+		return
+	}
+	if image = filterOut(doc.Find("img#landingImage")); image != "" {
+		return
 	}
 	return
 }
 
 func getTitle(doc *goquery.Document) (title string) {
-	ttl := doc.Find("span#productTitle")
-	if ttl.Length() > 0 {
-		title = ttl.Text()
+	filterOut := func(bl *goquery.Selection) string {
+		if bl.Length() > 0 {
+			return strings.Trim(bl.Text(), " \r\n\t")
+		}
+		return ""
+	}
+	if title = filterOut(doc.Find("span#productTitle")); title != "" {
+		return
 	}
 	return
 }

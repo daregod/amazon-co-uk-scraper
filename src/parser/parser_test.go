@@ -25,6 +25,8 @@ var _ = Describe("Test Parser", func() {
 				parser.AmazonCoUkParsedData{Title: "Go Systems Programming: Master Linux and Unix system level programming with Go", Price: "41.99", Image: "https://images-eu.ssl-images-amazon.com/images/I/41y7-qWywtL._SX218_BO1,204,203,200_QL40_.jpg", Available: true}},
 			{"059652692X.used_only.html",
 				parser.AmazonCoUkParsedData{Title: "Asterisk Cookbook", Price: "442.62", Image: "https://images-eu.ssl-images-amazon.com/images/I/51fXTdqAkaL._SX218_BO1,204,203,200_QL40_.jpg", Available: false}},
+			{"B000Q646NA.not_a_book.html",
+				parser.AmazonCoUkParsedData{Title: "MAM Start SooTher Suitable 0-2 Months with Sterilisable Travel Case - Pack of 2, Pink", Price: "4.19", Image: "https://images-eu.ssl-images-amazon.com/images/I/41bs5q7xa1L._SY300_QL70_.jpg", Available: true}},
 		}
 		for _, c := range cases {
 			fn, res := c.filename, c.result
@@ -43,5 +45,3 @@ func TestParser(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "parser")
 }
-
-var testData []byte = []byte(``)
