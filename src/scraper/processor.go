@@ -4,13 +4,7 @@ import (
 	"bytes"
 
 	"github.com/gocolly/colly"
-	"github.com/twinj/uuid"
 )
-
-type JobData struct {
-	ID   string
-	Data []AmazonCoUkBulkData
-}
 
 type AmazonCoUkBulkData struct {
 	Url   string                `json:"url"`
@@ -18,7 +12,7 @@ type AmazonCoUkBulkData struct {
 	Error *string               `json:"error,omitempty"`
 }
 
-func ProcessUrls(urls []string) JobData {
+func ProcessUrls(urls []string) []AmazonCoUkBulkData {
 	result := make([]AmazonCoUkBulkData, 0, len(urls))
 
 	c := colly.NewCollector(
@@ -56,12 +50,5 @@ func ProcessUrls(urls []string) JobData {
 		c.Visit(url)
 	}
 	c.Wait()
-	return JobData{
-		ID:   genGUID(),
-		Data: result,
-	}
-}
-
-func genGUID() string {
-	return uuid.NewV4().String()
+	return result
 }
