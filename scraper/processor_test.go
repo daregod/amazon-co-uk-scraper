@@ -8,7 +8,7 @@ import (
 
 	"github.com/gocolly/colly"
 
-	"github.com/daregod/amazon-co-uk-scraper/src/scraper"
+	"github.com/daregod/amazon-co-uk-scraper/scraper"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

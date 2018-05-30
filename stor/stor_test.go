@@ -3,9 +3,9 @@ package stor_test
 import (
 	"testing"
 
-	"github.com/daregod/amazon-co-uk-scraper/src/scraper"
+	"github.com/daregod/amazon-co-uk-scraper/scraper"
 
-	"github.com/daregod/amazon-co-uk-scraper/src/stor"
+	"github.com/daregod/amazon-co-uk-scraper/stor"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

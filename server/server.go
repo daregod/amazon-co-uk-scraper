@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/daregod/amazon-co-uk-scraper/src/scraper"
-	"github.com/daregod/amazon-co-uk-scraper/src/stor"
+	"github.com/daregod/amazon-co-uk-scraper/scraper"
+	"github.com/daregod/amazon-co-uk-scraper/stor"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/log"
 	"github.com/twinj/uuid"

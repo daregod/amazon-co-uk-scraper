@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/daregod/amazon-co-uk-scraper/src/server"
+	"github.com/daregod/amazon-co-uk-scraper/server"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/log"

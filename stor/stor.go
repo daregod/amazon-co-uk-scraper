@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/daregod/amazon-co-uk-scraper/src/scraper"
+	"github.com/daregod/amazon-co-uk-scraper/scraper"
 )
 
 // BulkStor - amazon.co.uk parsed data job store interface

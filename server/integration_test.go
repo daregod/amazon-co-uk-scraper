@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"github.com/daregod/amazon-co-uk-scraper/src/server"
+	"github.com/daregod/amazon-co-uk-scraper/server"
 	"github.com/gin-gonic/gin"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
