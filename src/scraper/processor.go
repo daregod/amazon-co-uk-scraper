@@ -20,10 +20,6 @@ func ProcessUrls(urls []string) []AmazonCoUkBulkData {
 	)
 	c.UserAgent = "Ad-Blocker/1 CFNetwork/758.5.3 Darwin/15.6.0"
 
-	c.OnRequest(func(r *colly.Request) {
-		r.Ctx.Put("url", r.URL.String())
-	})
-
 	c.OnError(func(r *colly.Response, err error) {
 		errSt := err.Error()
 		result = append(result, AmazonCoUkBulkData{
