@@ -27,3 +27,6 @@ _cgo_export.*
 # Temporary and backup files
 *.out
 *.bak
+
+# Fetcher work files
+/src/cmd/fetcher/*.html
