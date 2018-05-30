@@ -32,6 +32,43 @@
   revision = "077bca4d2caaf391ee780136adae00f59153dcd2"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/gin-contrib/sse"
+  packages = ["."]
+  revision = "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae"
+
+[[projects]]
+  name = "github.com/gin-gonic/gin"
+  packages = [
+    ".",
+    "binding",
+    "render"
+  ]
+  revision = "d459835d2b077e44f7c9b453505ee29881d5d12d"
+  version = "v1.2"
+
+[[projects]]
+  name = "github.com/go-playground/ansi"
+  packages = ["."]
+  revision = "777788a9be1a7296979a999c86b251fc777077a9"
+  version = "v2.1.0"
+
+[[projects]]
+  name = "github.com/go-playground/errors"
+  packages = ["."]
+  revision = "14d2d30656a95a5fa5a17d2e33540269eda5f158"
+  version = "v3.2.1"
+
+[[projects]]
+  name = "github.com/go-playground/log"
+  packages = [
+    ".",
+    "handlers/console"
+  ]
+  revision = "91a5908e654f9fc444a71ea3c51c72cb5c6c2442"
+  version = "v6.2.2"
+
+[[projects]]
   name = "github.com/gobwas/glob"
   packages = [
     ".",
@@ -69,10 +106,23 @@
   version = "v1.2.3"
 
 [[projects]]
+  name = "github.com/mattn/go-isatty"
+  packages = ["."]
+  revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
+  version = "v0.0.3"
+
+[[projects]]
   name = "github.com/onsi/ginkgo"
   packages = [
     ".",
     "config",
+    "ginkgo",
+    "ginkgo/convert",
+    "ginkgo/interrupthandler",
+    "ginkgo/nodot",
+    "ginkgo/testrunner",
+    "ginkgo/testsuite",
+    "ginkgo/watch",
     "internal/codelocation",
     "internal/containernode",
     "internal/failer",
@@ -131,6 +181,12 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/ugorji/go"
+  packages = ["codec"]
+  revision = "b4c50a2b199d93b13dc15e78929cfb23bfdf21ab"
+  version = "v1.1.1"
+
+[[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = [
@@ -139,7 +195,7 @@
     "html/atom",
     "html/charset"
   ]
-  revision = "dfa909b99c79129e1100513e5cd36307665e5723"
+  revision = "75944861c7512f64725d687546cfbc757626151f"
 
 [[projects]]
   branch = "master"
@@ -189,6 +245,12 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "gopkg.in/go-playground/validator.v8"
+  packages = ["."]
+  revision = "5f1438d3fca68893a817e4a66806cea46a9e4ebf"
+  version = "v8.18.2"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
@@ -197,6 +259,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fb6389066b5db7fe041a9a99775586aff55a430a1af427dbd6351879ada9dc21"
+  inputs-digest = "50dd78b0c78976f534767812b500ac302297b3c8534faf6e146a38a790e28142"
   solver-name = "gps-cdcl"
   solver-version = 1
