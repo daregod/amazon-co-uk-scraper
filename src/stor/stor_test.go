@@ -42,16 +42,19 @@ var _ = Describe("Stor", func() {
 				Meta: &scraper.AmazonCoUkParsedData{Title: "Go Systems Programming: Master Linux and Unix system level programming with Go", Price: "41.99", Image: "https://images-eu.ssl-images-amazon.com/images/I/41y7-qWywtL._SX218_BO1,204,203,200_QL40_.jpg", Available: true},
 			},
 		}
+
+		job1Id := "12345"
+		job2Id := "11111"
 		By("Save first")
-		job1Id := st.SaveBulk(data1)
+		st.SaveBulk(job1Id, data1)
 		job, err := st.GetBulk(job1Id)
 		Expect(err).To(Succeed())
 		Expect(job).To(ConsistOf(data1))
-		job, err = st.GetBulk("11111")
+		job, err = st.GetBulk(job2Id)
 		Expect(err).ToNot(Succeed())
 
 		By("Save second")
-		job2Id := st.SaveBulk(data2)
+		st.SaveBulk(job2Id, data2)
 		job, err = st.GetBulk(job2Id)
 		Expect(err).To(Succeed())
 		Expect(job).To(Equal(data2))
