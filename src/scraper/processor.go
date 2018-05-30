@@ -6,20 +6,25 @@ import (
 	"github.com/gocolly/colly"
 )
 
+// AmazonCoUkBulkData contain AmazonCoUkParsedData with meta information
 type AmazonCoUkBulkData struct {
-	Url   string                `json:"url"`
+	URL   string                `json:"url"`
 	Meta  *AmazonCoUkParsedData `json:"meta,omitempty"`
 	Error *string               `json:"error,omitempty"`
 }
 
+// Processor envelope
 type Processor interface {
 	ProcessUrls(urls []string) []AmazonCoUkBulkData
 }
 
+// AmazonCoUkProcessor is base Processor implementation
 type AmazonCoUkProcessor struct {
+	// Exported to allow flexibility tune
 	Collector *colly.Collector
 }
 
+// NewProcessor construct new Processor with default (limited) collector
 func NewProcessor() Processor {
 	return AmazonCoUkProcessor{
 		Collector: colly.NewCollector(
@@ -28,6 +33,7 @@ func NewProcessor() Processor {
 	}
 }
 
+// ProcessUrls will run parser on each url
 func (pr AmazonCoUkProcessor) ProcessUrls(urls []string) []AmazonCoUkBulkData {
 	result := make([]AmazonCoUkBulkData, 0, len(urls))
 
@@ -36,14 +42,14 @@ func (pr AmazonCoUkProcessor) ProcessUrls(urls []string) []AmazonCoUkBulkData {
 	pr.Collector.OnError(func(r *colly.Response, err error) {
 		errSt := err.Error()
 		result = append(result, AmazonCoUkBulkData{
-			Url:   r.Request.URL.String(),
+			URL:   r.Request.URL.String(),
 			Error: &errSt,
 		})
 	})
 
 	pr.Collector.OnResponse(func(r *colly.Response) {
 		item := AmazonCoUkBulkData{
-			Url: r.Request.URL.String(),
+			URL: r.Request.URL.String(),
 		}
 		pd := Parse(bytes.NewBuffer(r.Body))
 		err := pd.Check()

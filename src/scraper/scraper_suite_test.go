@@ -46,7 +46,7 @@ func bulkFromCases(baseUrl string) []scraper.AmazonCoUkBulkData {
 	for _, cs := range cases {
 		csRes := cs.result
 		results = append(results, scraper.AmazonCoUkBulkData{
-			Url:   baseUrl + cs.handlePath,
+			URL:   baseUrl + cs.handlePath,
 			Meta:  &csRes,
 			Error: nil,
 		})

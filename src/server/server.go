@@ -23,13 +23,17 @@ type JobData struct {
 }
 
 var (
-	StatusOK      = "OK"
+	// StatusOK = OK
+	StatusOK = "OK"
+	// StatusDeleted = Deleted OK
 	StatusDeleted = "DELETED OK"
+	// StatusProceed = Proceed OK
 	StatusProceed = "PROCEED OK"
-	StatusError   = "Error"
+	// StatusError = Error
+	StatusError = "Error"
 )
 
-// main Server struct
+// Server is base server implementation
 type Server struct {
 	// Storage for amazon.co.uk bulk parsed data
 	Storage stor.BulkStor
@@ -87,7 +91,7 @@ func (srv *Server) routeGET(c *gin.Context) {
 	if err != nil {
 		if srv.isInProgres(id) {
 			log.WithFields(log.F("id", id)).Info("STILL SCRAPING")
-			sendError(c, id, fmt.Errorf("STILL SCRAPING. Come back later."))
+			sendError(c, id, fmt.Errorf("STILL SCRAPING. Come back later"))
 			return
 		}
 		log.WithError(err).WithFields(log.F("id", id)).Alert("NO STORAGE RECORD")

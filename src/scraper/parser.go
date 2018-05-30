@@ -9,6 +9,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
+// AmazonCoUkParsedData contain required number of fields to parse amazon.co.uk
 type AmazonCoUkParsedData struct {
 	Title     string `json:"title"`
 	Price     string `json:"price"`
@@ -16,6 +17,7 @@ type AmazonCoUkParsedData struct {
 	Available bool   `json:"available"`
 }
 
+// Parse will parse data from reader to AmazonCoUkParsedData struct
 func Parse(r io.Reader) AmazonCoUkParsedData {
 	doc, err := goquery.NewDocumentFromReader(r)
 	if err != nil {
@@ -34,6 +36,7 @@ func Parse(r io.Reader) AmazonCoUkParsedData {
 	return result
 }
 
+// Check AmazonCoUkParsedData correctness
 func (pd AmazonCoUkParsedData) Check() error {
 	errIn := make([]string, 0, 3)
 	if pd.Title == "" {

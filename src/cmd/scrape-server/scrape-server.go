@@ -10,6 +10,7 @@ import (
 	"github.com/go-playground/log/handlers/console"
 )
 
+// Config used by flags parse
 type Config struct {
 	Addr string
 }
