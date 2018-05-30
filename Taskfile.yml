@@ -1,0 +1,86 @@
+version: '2'
+
+vars:
+  GO_PACKAGES:
+    ./cmd/scrape-server
+    ./scraper
+    ./server
+    ./stor
+
+tasks:
+  build:
+    desc: Build project binaries
+    cmds:
+      - task: go-install
+        vars: {REPO: ./cmd/scrape-server}
+
+  run:
+    desc: Run scraper
+    deps: [build]
+    cmds:
+        - scrape-server
+
+  test:
+    desc: Run project tests
+    deps: [testset]
+    cmds:
+        - ginkgo -r -randomizeAllSpecs --noColor -skip Integration
+
+  deep-test:
+    desc: Run project tests
+    deps: [testset]
+    cmds:
+        - ginkgo -r -randomizeAllSpecs --noColor -p -race
+
+  clean:
+    desc: Cleanup generated dirs
+    cmds:
+        - go clean -i ./cmd/scrape-server
+
+  testset:
+    desc: Build only testset
+    cmds:
+      - task: go-get
+        vars: {REPO: github.com/onsi/ginkgo}
+      - task: go-install
+        vars: {REPO: github.com/onsi/ginkgo/ginkgo}
+
+  lint:
+    desc: Runs golint
+    cmds:
+      - task: go-get
+        vars: {REPO: github.com/golang/lint/golint}
+      - golint {{.GO_PACKAGES}}
+
+  docker:
+    desc: Run docker image
+    deps: [docker-build]
+    cmds:
+      - docker run -d --rm --name scraper -p 8007:8007 amazon-co-uk-scraper
+
+  docker-build:
+    desc: Builds docker image
+    cmds:
+      - docker build -t "amazon-co-uk-scraper" .
+
+  dl-deps:
+    desc: Downloads cli dependencies
+    cmds:
+      - task: go-get
+        vars: {REPO: github.com/golang/dep/cmd/dep}
+
+  update-deps:
+    desc: Updates dependencies
+    deps: [dl-deps]
+    cmds:
+      - dep ensure
+      - dep ensure -update
+
+  go-get:
+    cmds:
+      - go get -u {{.REPO}}
+
+  go-install:
+    cmds:
+      - go install {{.REPO}}
+
