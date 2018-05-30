@@ -10,7 +10,7 @@ import (
 )
 
 var _ = Describe("Test Processor", func() {
-	It("Process", func() {
+	PIt("Process", func() {
 		jd := scraper.ProcessUrls(urls)
 		q, _ := json.MarshalIndent(jd, "", "\t")
 		fmt.Println(string(q))
