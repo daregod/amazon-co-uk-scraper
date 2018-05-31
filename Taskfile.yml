@@ -63,6 +63,11 @@ tasks:
     cmds:
       - docker build -t "amazon-co-uk-scraper" .
 
+  docker-stop:
+    desc: Stop running docker image
+    cmds:
+      - docker stop scraper
+
   dl-deps:
     desc: Downloads cli dependencies
     cmds:
