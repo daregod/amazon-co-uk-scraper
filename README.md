@@ -1,6 +1,6 @@
 ﻿# amazon.co.uk scraper test task
 
-# Задание:
+# Exersise:
 >## Тестовая задача для Senior Golang разработчика
 >
 >
@@ -27,3 +27,27 @@
 >```
 >- Сервис необходимо завернуть в Docker
 >- [Не обязательно] Плюсом будет реализация асинхронной загрузки, когда по некоторому requestID мы можем получить результат
+
+# Install:
+1. `go get github.com/daregod/amazon-co-uk-scraper`  
+2. `go get github.com/go-task/task/cmd/task`  
+3. `task update-deps`
+
+# Run locally:
+`task run`
+
+# Run dockerized:
+`task docker`
+
+# How to use:
+See [API-DESC.md](./API-DESC.md)
+
+# Tests:
+## Quick test:
+`task test`
+
+## Throttle test with integration:
+`task deep-test`
+* NOTE1: integration test needs internet connection
+* NOTE2: deep tests may need `race-detector-runtime` package
+
