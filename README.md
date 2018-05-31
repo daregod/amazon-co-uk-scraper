@@ -37,7 +37,8 @@
 `task run`
 
 # Run dockerized:
-`task docker`
+`task docker`  
+`task docker-stop` to stop running container.
 
 # How to use:
 See [API-DESC.md](./API-DESC.md)
