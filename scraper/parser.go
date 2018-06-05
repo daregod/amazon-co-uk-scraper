@@ -76,16 +76,13 @@ func getAvailable(doc *goquery.Document) (available bool) {
 			}
 		}
 	})
-	return
+	return //nolint: nakedret
 }
 
 func getPrice(doc *goquery.Document) (price string) {
 	cleanup := func(text string) string {
 		return strings.TrimFunc(text, func(c rune) bool {
-			if strings.ContainsAny("0123456789.", string(c)) {
-				return false
-			}
-			return true
+			return !strings.ContainsAny("0123456789.", string(c))
 		})
 	}
 	filterOut := func(bl *goquery.Selection) string {
@@ -117,7 +114,7 @@ func getPrice(doc *goquery.Document) (price string) {
 	if price = filterOut(doc.Find("span#priceblock_ourprice")); price != "" {
 		return
 	}
-	return
+	return //nolint: nakedret
 }
 
 func getImage(doc *goquery.Document) (image string) {
@@ -139,10 +136,10 @@ func getImage(doc *goquery.Document) (image string) {
 	if image = filterOut(doc.Find("img#detailImg"), "src"); image != "" {
 		return
 	}
-	if image = filterOut(doc.Find("img#main-image"), "data-midres-replacement"); image != "" {
+	if image = filterOut(doc.Find("img#main-image"), "data-midres-replacement"); image != "" { //nolint: lll
 		return
 	}
-	return
+	return //nolint: nakedret
 }
 
 func getTitle(doc *goquery.Document) (title string) {
@@ -162,5 +159,5 @@ func getTitle(doc *goquery.Document) (title string) {
 	if title = filterOut(doc.Find("h1#title")); title != "" {
 		return
 	}
-	return
+	return //nolint: nakedret
 }

@@ -11,16 +11,16 @@ import (
 )
 
 // Config used by flags parse
-type Config struct {
-	Addr string
+type config struct {
+	addr string
 }
 
 var (
-	cfg Config
+	cfg config
 )
 
 func init() {
-	flag.StringVar(&cfg.Addr, "listen", ":8007", "addr:port to listen on")
+	flag.StringVar(&cfg.addr, "listen", ":8007", "addr:port to listen on")
 }
 
 func main() {
@@ -31,5 +31,8 @@ func main() {
 	log.AddHandler(cLog, log.AllLevels...)
 	r := gin.Default()
 	sServ.MountRoutes(r)
-	r.Run(cfg.Addr)
+	err := r.Run(cfg.addr)
+	if err != nil {
+		log.WithError(err).WithField("listen address", cfg.addr).Error("Cannot run server") //nolint: lll
+	}
 }

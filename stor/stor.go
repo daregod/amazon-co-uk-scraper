@@ -30,13 +30,13 @@ func NewStor() BulkStor {
 	}
 }
 
-func (mem *memStor) SaveBulk(jobID string, bulkData []scraper.AmazonCoUkBulkData) {
+func (mem *memStor) SaveBulk(jobID string, bulkData []scraper.AmazonCoUkBulkData) { //nolint: lll
 	mem.Lock()
 	defer mem.Unlock()
 	mem.bulkByID[jobID] = bulkData
 }
 
-func (mem *memStor) GetBulk(jobID string) ([]scraper.AmazonCoUkBulkData, error) {
+func (mem *memStor) GetBulk(jobID string) ([]scraper.AmazonCoUkBulkData, error) { //nolint: lll
 	mem.RLock()
 	defer mem.RUnlock()
 	if jd, ok := mem.bulkByID[jobID]; ok {

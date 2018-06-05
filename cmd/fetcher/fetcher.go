@@ -12,16 +12,16 @@ import (
 	"strings"
 )
 
-type Config struct {
-	UA string
+type config struct {
+	userAgent string
 }
 
 var (
-	cfg Config
+	cfg config
 )
 
 func init() {
-	flag.StringVar(&cfg.UA, "user-agent", "Ad-Blocker/1 CFNetwork/758.5.3 Darwin/15.6.0", "set request UserAgent")
+	flag.StringVar(&cfg.userAgent, "user-agent", "Ad-Blocker/1 CFNetwork/758.5.3 Darwin/15.6.0", "set request UserAgent") //nolint: lll
 }
 
 func main() {
@@ -35,7 +35,7 @@ func main() {
 	fmt.Println("output to:", dir)
 
 	for _, url := range urls {
-		fileName, err := checkUrl(url)
+		fileName, err := checkURL(url)
 		if err != nil {
 			fmt.Printf("ERROR CHECKING %s (%s)", url, err)
 			continue
@@ -46,7 +46,11 @@ func main() {
 			fmt.Printf("ERROR FETCHING %s (%s)", url, err)
 			continue
 		}
-		ioutil.WriteFile(fileName, body, 0x888)
+		err = ioutil.WriteFile(fileName, body, 0x888)
+		if err != nil {
+			fmt.Printf("ERROR WRITING %s (%s)", fileName, err)
+			continue
+		}
 	}
 }
 
@@ -56,7 +60,7 @@ func fetch(url string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("User-Agent", cfg.UA)
+	req.Header.Set("User-Agent", cfg.userAgent)
 
 	res, err := client.Do(req)
 	if err != nil {
@@ -81,9 +85,9 @@ func fetch(url string) ([]byte, error) {
 	return out, nil
 }
 
-func checkUrl(url string) (string, error) {
+func checkURL(url string) (string, error) {
 	if !strings.Contains(url, "amazon.co.uk/gp/product/") {
-		return "", fmt.Errorf("%s is not in allowed. fetch only amazon.co.uk/gp/product/<productID>", url)
+		return "", fmt.Errorf("%s is not in allowed. fetch only amazon.co.uk/gp/product/<productID>", url) //nolint: lll
 	}
 	parts := strings.Split(url, "/")
 	fileName := parts[len(parts)-1] + ".html"

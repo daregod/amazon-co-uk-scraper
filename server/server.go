@@ -62,7 +62,7 @@ func (srv *Server) MountRoutes(r gin.IRouter) {
 func (srv *Server) routePUT(c *gin.Context) {
 	reqBody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
-		log.WithError(err).WithFields(log.F("RequestURI", c.Request.RequestURI)).Alert("CANNOT READ REQUEST BODY")
+		log.WithError(err).WithFields(log.F("RequestURI", c.Request.RequestURI)).Alert("CANNOT READ REQUEST BODY") //nolint: lll
 		sendError(c, "", err)
 		return
 	}
@@ -70,7 +70,7 @@ func (srv *Server) routePUT(c *gin.Context) {
 	var urls = []string{}
 	err = json.Unmarshal(reqBody, &urls)
 	if err != nil {
-		log.WithError(err).WithFields(log.F("Request Body", string(reqBody))).Alert("CANNOT UNMARSHAL REQUEST BODY")
+		log.WithError(err).WithFields(log.F("Request Body", string(reqBody))).Alert("CANNOT UNMARSHAL REQUEST BODY") //nolint: lll
 		sendError(c, "", err)
 		return
 	}
@@ -158,7 +158,7 @@ func sendError(c *gin.Context, id string, err error) {
 
 // mustMarshall suppress error, because marshalled only fixed structs
 func mustMarshall(data interface{}) []byte {
-	marshalled, _ := json.Marshal(data)
+	marshalled, _ := json.Marshal(data) //nolint: gas
 	return marshalled
 }
 

@@ -3,6 +3,7 @@ package scraper
 import (
 	"bytes"
 
+	"github.com/go-playground/log"
 	"github.com/gocolly/colly"
 )
 
@@ -62,7 +63,10 @@ func (pr AmazonCoUkProcessor) ProcessUrls(urls []string) []AmazonCoUkBulkData {
 		result = append(result, item)
 	})
 	for _, url := range urls {
-		pr.Collector.Visit(url)
+		err := pr.Collector.Visit(url)
+		if err != nil {
+			log.WithError(err).WithField("url", url).Alert("Cannot visit url while processing") //nolint: lll
+		}
 	}
 	pr.Collector.Wait()
 	return result
