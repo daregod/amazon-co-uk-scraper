@@ -24,11 +24,13 @@ tasks:
     desc: Run project tests
     deps: [testset]
     cmds:
-        - ginkgo -r -randomizeAllSpecs --noColor -skip Integration
+        - ginkgo -r -randomizeAllSpecs --noColor
 
   deep-test:
     desc: Run project tests
     deps: [testset]
+    env:
+        INTEGRATION: 1
     cmds:
         - ginkgo -r -randomizeAllSpecs --noColor -p -race
 
